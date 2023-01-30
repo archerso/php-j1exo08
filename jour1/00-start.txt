@@ -1,0 +1,35 @@
+créer un dossier obligatoirement
+c://xampp\htdocs
+=> si vous créer ailleurs que ce dossier le PHP ne vas PAS MARCHER
+
+
+coté client avec le navigateur(fire fox ou chrome) :
+faire des demandes, consommer la réponse
+il y a le langage client html/css/javascript
+saas traduit en cssjquery traduit en javascript
+
+
+
+
+coté serveur attendre la requette, traiter la demandes
+ traitement php, python, c++, javascript et sql
+
+ -------------
+ la REQUETTE est en http
+
+ => PHP est un module d'apache
+ =< Apache  => service qui permet d'écouter les requêtes http et qui passe la main a php
+
+ -----------------------
+ semaine dernière installé un logiciel XAMPP =>
+ x Crosss Plateform => Macos /windows /linux
+
+ Apache
+ Maria DB
+ P php
+ Perl
+
+ il faut obligatoirement démarer le logiciel xamp et démarer le service Apache
+ c:\xamp\
+ xamp-control.exe =< lancer le panneau de gestion du serveur local
+ cliquer sur le bouton Start du Apache
