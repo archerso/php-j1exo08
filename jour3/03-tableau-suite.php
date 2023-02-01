@@ -41,6 +41,19 @@ foreach($etudiants as $etudiant){
 }
 
 //Céline débute sur sql et maîtrise php
-echo "<p>"
+echo "<p>{$etudiant["nom"]} débute sur {$etudiant["competences"][1]} et maîtrise {$etudiants[competences][0]}</p>";
+
+//créer 04-exo.php
+//créer une variable s'appelle villes qui est de type tableau indexé
+//ce tableau contient 2 tableaux associatifs
+[
+    nom Paris
+    nbHabitant : 5_000_000
+    arrondissements 15
+    monuments ["vieux port" , "velodrome"]
+]
+écrire dans le navigateur les phrases suivante
+
+
 
 
