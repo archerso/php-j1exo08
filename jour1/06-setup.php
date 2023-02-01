@@ -1,29 +1,20 @@
-<?php
-
-
-// set up = personnalisé le serveur => impact sur la fonction
-// Xampp
+<?php 
+// set up => 
+// XAMPP 
+// personnalisér PHP => xdebug => impact sur la fonction
 // var_dump() => meilleure mise en forme
 
-// Visual studio Code => php Intelliphense
-// Extension de visual qui permet d'avoir des propositiions lorsque vous écrivez
+// Visual Studio Code => php Intelephense
+// extension de visual qui permet d'avoir des propositions lorsque vous écrivez du php
 
-use function PHPSTORM_META\map;
-use function PHPSTORM_META\type;
+// string texte 
+// nombre int / float 
+// boolean
 
-/*il y a 5 type 
-stream_set_blocking
-text
-nombre : intg / float
-boolean
-tableau : associatif et 
-git init
-git add ou git add --A
-git commit commit -m 
+// array 
+// tableaux indexés
+// tableaux associatifs 
 
-aller sur mon github
+// objets 
 
-creér un repository
-git branch -m 
-git remote add origin
-git push -u origin main */
+// 07-traitement-string.php
