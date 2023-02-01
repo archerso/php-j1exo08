@@ -46,13 +46,13 @@ echo "<p>{$etudiant["nom"]} débute sur {$etudiant["competences"][1]} et maîtri
 //créer 04-exo.php
 //créer une variable s'appelle villes qui est de type tableau indexé
 //ce tableau contient 2 tableaux associatifs
-[
-    nom Paris
-    nbHabitant : 5_000_000
-    arrondissements 15
-    monuments ["vieux port" , "velodrome"]
-]
-écrire dans le navigateur les phrases suivante
+// [
+//     nom Paris
+//     nbHabitant : 5_000_000
+//     arrondissements 15
+//     monuments ["vieux port" , "velodrome"]
+// ]
+// écrire dans le navigateur les phrases suivantes
 
 
 
