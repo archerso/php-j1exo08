@@ -1,0 +1,24 @@
+ordianteur A travail + repository local
+
+github
+
+Ordinateur B rien 
+git clone ...
+
+----------------------
+
+Ordianateur A travail 20% + repository local
+git pull
+
+github
+Ordinateur B travail 80% + repository local + push sur github
+git init
+git add --all
+git commit -m "description"
+
+--- créer un github => repository
+git branch -M main (renommer la branche)
+git remote origin url-debut-github
+git push -u origin main
+
+//
