@@ -1,0 +1,5 @@
+lancer xampp
+lancer Apache
+
+Lancer le projet de vendredi aprés midi
+
