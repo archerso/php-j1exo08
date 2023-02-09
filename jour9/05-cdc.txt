@@ -1,0 +1,67 @@
+combien de page
+
+Partie publique()n'importe qui accède)
+Accueil
+Présentation
+Login (login/passwordMention légale)
+404
+
+Partie privée (il faut se connecter pour pouvoir y accéder)
+Accueil => Tableau de bord
+Gestion des pages
+Gestion des utilisateurs
+401 => si une personne n'est pas connecté MAIS veut accéder à une page de la partie privée
+9 pages à créer
+-------------------------------
+wireframing => mise en page général du site =>
+
+--------------------------------
+
+url
+Partie publique (n'importe qui peut accéder)
+Accueil => index.php
+Présentation index.php?page=login
+Login (login / password) index.php?page=login
+Mention légale index.php?page=Mention
+404 tous les autres champs
+Partie privée (il  faut au préalable se connecter pour pouvoir y accéder)
+Accueil => Tableau de bord index.php?page=users&partie=privee
+401 => si une personne n'est pas connecté MAIS veut accéder à une page de la Partie privée
+
+Base de données
+
+deux concept à gérer
+
+table pages qui contient 6 colonnes
+id clé primaire
+titre texte maximum de 255 lettres
+slug => texte sans espace sans caractères spéciaux
+contenu texte avec au minimum 65 mille de lettres
+dt_creation DATE et heure
+auteur texte maximum de 255 lettres
+
+
+users 6 colonnes
+id clé primaire
+nom texte maximum de 255 lettres
+email texte maximum de 255 lettres
+mdp texte max de 255 lettres
+dt_creation DATE et heure
+stattus actif/inactif boolean
+--------------------
+
+index.phpassets/ => fichier css / js /image / pdf / sass
+vue/public = >
+            Accueil 
+            presentation
+            login.php
+            404.php mention légale.php
+
+    /privée 
+            tableau-bord.php
+            gestion-page.php
+            gestion-user.php
+            401.php
+
+        lib/class et les traitement des formulaires / Autres fonctions
+
