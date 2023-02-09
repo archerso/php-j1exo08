@@ -28,7 +28,7 @@ Partie privée (il  faut au préalable se connecter pour pouvoir y accéder)
 Accueil => Tableau de bord index.php?page=users&partie=privee
 401 => si une personne n'est pas connecté MAIS veut accéder à une page de la Partie privée
 
-Base de données
+Base de données => connecté à phpMyAdmin
 
 deux concept à gérer
 
@@ -64,4 +64,8 @@ vue/public = >
             401.php
 
         lib/class et les traitement des formulaires / Autres fonctions
+
+        utf8mb4_general_ci => fonction de stocker correctement les caractère sur le disque dur
+        stocker correctement les lettres fr 
+        encodage
 

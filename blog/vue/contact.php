@@ -30,6 +30,4 @@
         <div class="alert alert-sucess">
             <?php echo $_SESSION["message"]["info"] ?>
         </div>
-
-
 <?php endif ?>
