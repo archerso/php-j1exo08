@@ -17,20 +17,4 @@
 </form>
 
 
-<!--  le style A RAJOUTER + -->
-<!-- DONNE LE MESSAGE D'ERREUR ou l'accés au tableau de bord -->
-<?php if(!empty($_SESSION["message"])) : ?>
-    <?php if($_SESSION["message"]["alert"] === "success") : ?> 
-        <p class="white-text green" 
-           style="padding:5px 10px">
-           <?php echo $_SESSION["message"]["info"]  ?>
-        </p>
-    <?php elseif($_SESSION["message"]["alert"] === "danger") : ?> 
-        <p class="white-text pink" 
-           style="padding:5px 10px">
-           <?php foreach($_SESSION["message"]["info"] as $i) : ?>
-             <?php echo $i  ?><br>
-           <?php endforeach ?>
-        </p>
-    <?php endif ?>
-<?php endif ?>
+<?php require "lib/message-flash.php" ?>

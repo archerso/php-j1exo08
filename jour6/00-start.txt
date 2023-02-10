@@ -1,7 +1,7 @@
 support de cours
 https://formation.webdevpro.net/php-poo
 
-login : phppassword : poo
+login : php password : poo
 // texte => string//chiffre => int/float
 //logique = boolean
 //tableau
