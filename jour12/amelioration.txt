@@ -1,0 +1,13 @@
+1faire en sorte que les utilisateur crée en profil avec un mot de passe complexe Majuscule / miniscule/ chiffre /caractère spéciaux
+2 téléchargé nos propores images dans la gestions des pages mais aussi dans  la gestion users
+3 pour tous les formulaires mettre en place un token pour éviter les attaques csrf
+4 mettre en place un systeme pour changer son mot de passe
+5 MD5 pour le hashage des mots de passe => utiliser SHA1 et sendmail_path
+6 SEO => référencement naturel
+google analytics
+google search Console 
+robots.text
+sitemap.xml
+optimisation des balises <title>
+
+7

@@ -1,73 +1,91 @@
-<?php
+<?php 
 
 session_start();
 $erreurs = [];
-
-require "base de donnee.php";
+require "base-de-donnee.php";
+require "fonctions.php";
+isLogged(); 
 
 if(
-    empty($_POST["nom"]) ||
-    empty($_POST["email"]) ||
-    empty($_POST["password"]) ||
+    empty($_POST["nom"]) || 
+    empty($_POST["email"])
 ){
     array_push($erreurs , "veuillez compléter les champs");
 }
 
-if (empty($_POST["nom"]) ||
-empty($post["email"])
-){
-    array_push($erreurs, "Veuillez compléter les champs");
+if( empty($_POST["password"]) && !isset($_POST["id"]) ){
+    array_push($erreurs , "veuillez compléter le mot de passe");
 }
 
-if(empty["password"] && !isset($_POST["id"])) {
-    //ISSET permet de vérifier S4IL Y A UNE ANCIENNE VALEUR ET DE L'AFFICHER
-    
-}
-if(strlen($_POST["nom"]) >= 4 && strlen(($_POST["nom"] >=255))){
+if(strlen($_POST["nom"]) <= 4 || strlen($_POST["nom"]) >= 255){
     array_push($erreurs , "le champ nom doit contenir entre 4 et 255 lettres");
 }
 
-if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
-    array_push($erreurs, "l'email n'est pas conforme");
+if(!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
+    array_push($erreurs , "l'email n'est pas conforme");
 }
 
-//autre test => il ne faut pas qu'il ya ait 2 utilisateurs avec le m^me email
+// le champ password doit contenir entre 4 et 255 caractères uniquement dans le formulaire d'Ajout 
+if((strlen($_POST["password"]) <= 4 || strlen($_POST["password"]) >= 255) && !isset($_POST["id"])){
+    array_push($erreurs , "le champ password doit contenir entre 4 et 255 lettres");
+}
+
+// autre test => il ne faut pas qu'il y ait 2 utilisateurs qui disposent du même email 
 $sth = $connexion->prepare("SELECT * FROM users WHERE email = :email");
 $sth->execute(["email" => $_POST["email"]]);
-$resultat $sth->fetchall();
+$resultat = $sth->fetch();
 
-if(!empty($resultat)){
-    array_push($erreurs , "il existe déja un profil avec cet email");
+
+if(!empty($resultat) && $_POST["id"] != $resultat["id"]){
+    array_push($erreurs , "il existe déjà un profil avec cet email");
 }
 
 if(isset($_POST["actif"])){
-    $_POST["actif"]
+    $_POST["actif"] = "1";
+}else {
+    $_POST["actif"] = "0";
 }
-if !filter_var($e)
 
-//traitements
+// traitements 
 $_SESSION["form"] = $_POST ;
 
-if(count($erreurs) ===0){
-$_SESSION["form"] = [];
-//ajouter le profil en base de données
+if(count($erreurs) === 0){
+    $_SESSION["form"] = [];
 
-$sth = $connexion->prepare("
-INSERT INTO users
-(nom, email, password, dt_creation, status)
-VALUES
-(:nom , :email , MD5(:password) , NOW() , actif)
-
-");
-//MD5() fonction de hashage de MySQL => permet de hasher le mot de passe dans la base 
-//ET la fonction ne dispose pas de fonction inverse
-$sth->execute($_POST);
-
-header("location: http://localhost/php-initiation/projet/index.php?page=user&partie=privee");
+    // si le formulaire ne contient pas de champ id 
+    if(!isset($_POST["id"])){ 
+        // ajouter le profil en base données 
+        $sth = $connexion->prepare("
+            INSERT INTO users 
+            (nom , email , password , dt_creation , status)
+            VALUES
+            (:nom , :email , MD5(:password) , NOW() , :actif)
+        ");
+        // MD5() fonction de hashage de MySQL => permet de hasher le mot de passe dans la base 
+        // ET la fonction ne dispose pas de fonction inverse 
+        $sth->execute($_POST);
+    }elseif(isset($_POST["id"]) && empty($_POST["password"])){
+        // UPDATE de tous les champs sauf le mot de passe 
+        unset($_POST["password"]);
+        $sth = $connexion->prepare("
+            UPDATE users SET nom = :nom , email = :email , status = :actif WHERE id = :id 
+        ");
+        $sth->execute($_POST);
+    }else {
+        // UPDATE de tous les champs AVEC le mot de passe 
+        $sth = $connexion->prepare("
+            UPDATE users SET nom = :nom , 
+                    email = :email , status = :actif , password = MD5(:password) WHERE id = :id 
+        ");
+        $sth->execute($_POST);
+    }
+    
+    header("Location: " . WWW . "?page=user&partie=privee");
 }else{
     $_SESSION["message"] = [
         "alert" => "danger",
         "info" => $erreurs
     ];
-    header("location: http://localhost/php-initiation/projet/index.php?page=user&partie=privee&action=add");
-} 
+    header("Location: " . WWW . "?page=user&partie=privee&action=add");
+}
+exit ;

@@ -2,11 +2,10 @@
 session_start(); // étant donné formulaire + authentification => prépare le terrain
 
 // le nom de domaine de ton projet 
-define("WWW","http://localhost/php-initiation/projet/index.php");
-
 // appeler la base de données 
 require "lib/base-de-donnee.php";
-    
+require "lib/const.php";
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -29,13 +28,20 @@ require "lib/base-de-donnee.php";
                     <a href="index.php?page=presentation" class="nav-link">Présentation</a>
                 </li>
             </ul>
+
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a href="index.php?page=login" class="nav-link">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a href="index.php?page=accueil&partie=privee" class="nav-link">Tableau Bord</a>
-                </li>
+                <?php if( isset($_SESSION["user"]) ) :?>
+                    <li class="nav-item">
+                        <a href="index.php?page=accueil&partie=privee" class="nav-link">Tableau Bord</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.php?page=logout" class="nav-link">Déconnexion</a>
+                    </li>
+                <?php else : ?>
+                    <li class="nav-item">
+                        <a href="index.php?page=login" class="nav-link">Login</a>
+                    </li>
+                <?php endif ?>
             </ul>
         </nav>
     </header>    
@@ -53,6 +59,19 @@ require "lib/base-de-donnee.php";
 
         <?php elseif( !empty($_GET["page"]) && $_GET["page"] === "mention" ) : ?>
             <?php require "vue/public/mention-legale.php" ?>
+
+        <?php elseif( !empty($_GET["page"]) && $_GET["page"] === "logout" ) : ?>
+            <!-- gérer la déconnexion --> 
+            <?php 
+                unset($_SESSION["user"]) ;
+                $_SESSION["message"] = [
+                    "alert" => "success",
+                    "info" => "vous avez été déconnecté avec succès"
+                ];
+                header("Location: " . WWW . "?page=login");
+                exit; // direction et stop 
+            ?>
+
         <!-- partie privée -->
 
         <?php elseif( !empty($_GET["page"]) && !empty($_GET["partie"]) && 
@@ -70,16 +89,27 @@ require "lib/base-de-donnee.php";
 
             <?php elseif(!empty($_GET["action"]) && $_GET["action"] == "delete" ) : ?>
 
-            <?php elseif(!empty($_GET["action"]) && $_GET["action"] == "update" ) : ?>
-
-                <?php
-                $sth = $connexion->prepare("
-                SELECT * FROM users WHERE id = :id");
-                $user = $sth->fetch();
+                <?php 
+                    $sth = $connexion->prepare("
+                        DELETE FROM users WHERE id = :id
+                    ");
+                    $sth->execute(["id" => $_GET["id"]]);
+                    header("Location: ". WWW . "?page=user&partie=privee");
+                    exit ; 
                 ?>
-                var_dump($user);
-             
+
+            <?php elseif(!empty($_GET["action"]) && $_GET["action"] == "update" ) : ?>
                 
+                <?php 
+                    $sth = $connexion->prepare("
+                        SELECT * FROM users WHERE id = :id
+                    ");
+                    $sth->execute(["id" => $_GET["id"]]);
+                    $user = $sth->fetch();
+                ?>
+                <?php require "vue/privee/gestion-user-form.php" ?>
+
+
             <?php else : ?>
                 <?php require "vue/privee/gestion-user.php" ?>
             <?php endif ?>
@@ -87,17 +117,45 @@ require "lib/base-de-donnee.php";
         <?php elseif( !empty($_GET["page"]) && !empty($_GET["partie"]) && 
                 $_GET["page"] === "page" && 
                 $_GET["partie"] === "privee") : ?>
+
+            <!-- gérer le CRUD des pages ajout -->
+            <?php if(!empty($_GET["action"]) && $_GET["action"] == "add" ) : ?>
+                <?php require "vue/privee/gestion-page-form.php" ?>
+
+            <?php elseif(!empty($_GET["action"]) && $_GET["action"] == "delete" ) : ?>
+                <!-- suppression -->
+                <?php 
+                    $sth = $connexion->prepare("
+                        DELETE FROM pages WHERE id = :id
+                    ");
+                    $sth->execute(["id" => $_GET["id"]]);
+                    header("Location: ". WWW . "?page=page&partie=privee");
+                    exit ; 
+                ?>
+
+            <?php elseif(!empty($_GET["action"]) && $_GET["action"] == "update" ) : ?>
+
+                <?php 
+                    $sth = $connexion->prepare("
+                        SELECT * FROM pages WHERE id = :id
+                    ");
+                    $sth->execute(["id" => $_GET["id"]]);
+                    $page = $sth->fetch();
+                ?>
+                <?php require "vue/privee/gestion-page-form.php" ?>
+
+            <?php else : ?>
                 <?php require "vue/privee/gestion-page.php" ?>
+            <?php endif ?>
 
         <!-- fin partie privée -->
         <?php else : ?>
             <?php require "vue/public/404.php" ?>
         <?php endif ?>
 
-
-
     </div>
-
-
+    <footer class="my-3 text-center">
+        <a href="<?php echo WWW ?>?page=mention" class="text-decoration-none">mentions légales</a>
+    </footer>
 </body>
 </html>
